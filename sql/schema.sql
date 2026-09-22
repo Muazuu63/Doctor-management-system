@@ -1,0 +1,129 @@
+CREATE TABLE IF NOT EXISTS doctors (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  name_bn TEXT DEFAULT '',
+  degree TEXT DEFAULT '',
+  specialty TEXT DEFAULT '',
+  phone TEXT NOT NULL UNIQUE,
+  email TEXT DEFAULT '',
+  password_hash TEXT NOT NULL,
+  consultation_fee INTEGER DEFAULT 500,
+  slot_minutes INTEGER DEFAULT 20,
+  bio TEXT DEFAULT '',
+  is_active INTEGER DEFAULT 1,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS patients (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  phone TEXT NOT NULL UNIQUE,
+  pin TEXT NOT NULL,
+  gender TEXT DEFAULT '',
+  age INTEGER DEFAULT 0,
+  blood_group TEXT DEFAULT '',
+  address TEXT DEFAULT '',
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS schedules (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  doctor_id INTEGER NOT NULL DEFAULT 1,
+  title TEXT NOT NULL,
+  day_of_week INTEGER NOT NULL,
+  start_time TEXT NOT NULL,
+  end_time TEXT NOT NULL,
+  slot_minutes INTEGER NOT NULL DEFAULT 20,
+  max_serial INTEGER DEFAULT 50,
+  is_active INTEGER DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS schedule_exceptions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  doctor_id INTEGER NOT NULL DEFAULT 1,
+  except_date TEXT NOT NULL,
+  is_off INTEGER DEFAULT 0,
+  title TEXT DEFAULT '',
+  start_time TEXT DEFAULT NULL,
+  end_time TEXT DEFAULT NULL,
+  slot_minutes INTEGER DEFAULT 20,
+  max_serial INTEGER DEFAULT 50,
+  note TEXT DEFAULT ''
+);
+
+CREATE TABLE IF NOT EXISTS appointments (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  patient_id INTEGER NOT NULL,
+  doctor_id INTEGER NOT NULL DEFAULT 1,
+  schedule_id INTEGER DEFAULT 0,
+  appointment_date TEXT NOT NULL,
+  serial_no INTEGER NOT NULL,
+  scheduled_time TEXT NOT NULL,
+  original_time TEXT NOT NULL,
+  slot_minutes INTEGER NOT NULL DEFAULT 20,
+  delay_minutes INTEGER DEFAULT 0,
+  status TEXT NOT NULL DEFAULT 'booked',
+  token TEXT NOT NULL,
+  notes TEXT DEFAULT '',
+  sms_sent INTEGER DEFAULT 0,
+  reminder_sent INTEGER DEFAULT 0,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(appointment_date, serial_no, doctor_id)
+);
+
+CREATE TABLE IF NOT EXISTS delays (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  doctor_id INTEGER NOT NULL DEFAULT 1,
+  delay_date TEXT NOT NULL,
+  delay_minutes INTEGER NOT NULL,
+  reason TEXT DEFAULT '',
+  applied_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS prescriptions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  appointment_id INTEGER NOT NULL,
+  patient_id INTEGER NOT NULL,
+  doctor_id INTEGER NOT NULL DEFAULT 1,
+  complaints TEXT DEFAULT '',
+  findings TEXT DEFAULT '',
+  diagnosis TEXT DEFAULT '',
+  medicines TEXT DEFAULT '[]',
+  tests TEXT DEFAULT '',
+  advice TEXT DEFAULT '',
+  follow_up_date TEXT DEFAULT '',
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS medicine_templates (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  doctor_id INTEGER NOT NULL DEFAULT 1,
+  name TEXT NOT NULL,
+  dose TEXT DEFAULT '',
+  duration TEXT DEFAULT '',
+  instruction TEXT DEFAULT ''
+);
+
+CREATE TABLE IF NOT EXISTS sms_logs (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  phone TEXT NOT NULL,
+  message TEXT NOT NULL,
+  type TEXT DEFAULT 'info',
+  status TEXT DEFAULT 'logged',
+  appointment_id INTEGER DEFAULT 0,
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS settings (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  skey TEXT NOT NULL UNIQUE,
+  svalue TEXT DEFAULT ''
+);
+
+CREATE TABLE IF NOT EXISTS activity_logs (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  actor TEXT DEFAULT '',
+  action TEXT NOT NULL,
+  detail TEXT DEFAULT '',
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);

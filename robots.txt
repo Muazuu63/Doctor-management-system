@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /doctor/
+Disallow: /data/
+Disallow: /includes/
+Disallow: /sql/

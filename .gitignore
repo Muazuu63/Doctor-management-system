@@ -1,0 +1,6 @@
+data/config.json
+data/*.db
+data/*.sqlite
+uploads/**
+!uploads/.htaccess
+.DS_Store

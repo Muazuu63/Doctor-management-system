@@ -1,0 +1,129 @@
+CREATE TABLE IF NOT EXISTS doctors (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(191) NOT NULL,
+  name_bn VARCHAR(191) DEFAULT '',
+  degree VARCHAR(255) DEFAULT '',
+  specialty VARCHAR(191) DEFAULT '',
+  phone VARCHAR(30) NOT NULL UNIQUE,
+  email VARCHAR(191) DEFAULT '',
+  password_hash VARCHAR(255) NOT NULL,
+  consultation_fee INT DEFAULT 500,
+  slot_minutes INT DEFAULT 20,
+  bio TEXT,
+  is_active TINYINT DEFAULT 1,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS patients (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(191) NOT NULL,
+  phone VARCHAR(30) NOT NULL UNIQUE,
+  pin VARCHAR(20) NOT NULL,
+  gender VARCHAR(20) DEFAULT '',
+  age INT DEFAULT 0,
+  blood_group VARCHAR(10) DEFAULT '',
+  address VARCHAR(255) DEFAULT '',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS schedules (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  doctor_id INT NOT NULL DEFAULT 1,
+  title VARCHAR(191) NOT NULL,
+  day_of_week INT NOT NULL,
+  start_time VARCHAR(10) NOT NULL,
+  end_time VARCHAR(10) NOT NULL,
+  slot_minutes INT NOT NULL DEFAULT 20,
+  max_serial INT DEFAULT 50,
+  is_active TINYINT DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS schedule_exceptions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  doctor_id INT NOT NULL DEFAULT 1,
+  except_date DATE NOT NULL,
+  is_off TINYINT DEFAULT 0,
+  title VARCHAR(191) DEFAULT '',
+  start_time VARCHAR(10) DEFAULT NULL,
+  end_time VARCHAR(10) DEFAULT NULL,
+  slot_minutes INT DEFAULT 20,
+  max_serial INT DEFAULT 50,
+  note VARCHAR(255) DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS appointments (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  patient_id INT NOT NULL,
+  doctor_id INT NOT NULL DEFAULT 1,
+  schedule_id INT DEFAULT 0,
+  appointment_date DATE NOT NULL,
+  serial_no INT NOT NULL,
+  scheduled_time VARCHAR(10) NOT NULL,
+  original_time VARCHAR(10) NOT NULL,
+  slot_minutes INT NOT NULL DEFAULT 20,
+  delay_minutes INT DEFAULT 0,
+  status VARCHAR(30) NOT NULL DEFAULT 'booked',
+  token VARCHAR(64) NOT NULL,
+  notes VARCHAR(255) DEFAULT '',
+  sms_sent TINYINT DEFAULT 0,
+  reminder_sent TINYINT DEFAULT 0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY uniq_serial (appointment_date, serial_no, doctor_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS delays (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  doctor_id INT NOT NULL DEFAULT 1,
+  delay_date DATE NOT NULL,
+  delay_minutes INT NOT NULL,
+  reason VARCHAR(255) DEFAULT '',
+  applied_at DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS prescriptions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  appointment_id INT NOT NULL,
+  patient_id INT NOT NULL,
+  doctor_id INT NOT NULL DEFAULT 1,
+  complaints TEXT,
+  findings TEXT,
+  diagnosis TEXT,
+  medicines TEXT,
+  tests TEXT,
+  advice TEXT,
+  follow_up_date VARCHAR(20) DEFAULT '',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS medicine_templates (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  doctor_id INT NOT NULL DEFAULT 1,
+  name VARCHAR(191) NOT NULL,
+  dose VARCHAR(100) DEFAULT '',
+  duration VARCHAR(100) DEFAULT '',
+  instruction VARCHAR(191) DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS sms_logs (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  phone VARCHAR(30) NOT NULL,
+  message TEXT NOT NULL,
+  type VARCHAR(30) DEFAULT 'info',
+  status VARCHAR(30) DEFAULT 'logged',
+  appointment_id INT DEFAULT 0,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS settings (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  skey VARCHAR(100) NOT NULL UNIQUE,
+  svalue TEXT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS activity_logs (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  actor VARCHAR(100) DEFAULT '',
+  action VARCHAR(191) NOT NULL,
+  detail TEXT,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

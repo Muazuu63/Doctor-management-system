@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>মেডিসেবা সিস্টেম গাইড — প্রিন্ট / PDF</title>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --g:#0b3d34; --a:#146857; }
+    body { font-family:"Hind Siliguri",sans-serif; max-width:900px; margin:0 auto; padding:24px; color:#122; line-height:1.7; }
+    h1,h2,h3 { color:var(--g); }
+    .hero { background:linear-gradient(135deg,#0b3d34,#146857); color:#fff; padding:28px; border-radius:18px; }
+    .card { border:1px solid #d7e3dc; border-radius:14px; padding:16px; margin:14px 0; }
+    table { width:100%; border-collapse:collapse; }
+    th,td { border:1px solid #d7e3dc; padding:8px; text-align:left; vertical-align:top; }
+    th { background:#eef7f3; }
+    .mermaid { background:#f8fffb; padding:12px; border-radius:12px; overflow:auto; }
+    img.shot { width:100%; border:1px solid #d7e3dc; border-radius:12px; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    @media print { .noprint { display:none; } body { padding:0; } a { color:inherit; text-decoration:none; } }
+    @media (max-width:700px){ .grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <p class="noprint"><button onclick="window.print()">PDF / প্রিন্ট</button> — ব্রাউজারের Save as PDF ব্যবহার করুন</p>
+  <div class="hero">
+    <h1>মেডিসেবা ক্লিনিক সিস্টেম</h1>
+    <p>ওয়েবসাইট + ডাক্তার ম্যানেজমেন্ট · সময়ভিত্তিক সিরিয়াল · SMS · প্রেসক্রিপশন</p>
+  </div>
+
+  <h2>১. এই সিস্টেম কেন</h2>
+  <p>চেম্বারে ৫০ জন সিরিয়াল নিলে সবাই সকাল থেকে বসে থাকে। এই সফটওয়্যার প্রত্যেককে নির্দিষ্ট সময় দেয় (২:০০, ২:২০, ২:৪০)। ডাক্তার দেরি করলে সবার সময় সরে যায় এবং মেসেজ যায়। রোগী ফোন নম্বর দিয়ে চেনা হয়।</p>
+
+  <h2>২. কারা কী করবে</h2>
+  <div class="grid">
+    <div class="card">
+      <h3>রোগী (ওয়েবসাইট)</h3>
+      <ul>
+        <li>তারিখ ও স্লট বেছে সিরিয়াল নেয়</li>
+        <li>SMS-এ সময় পায়</li>
+        <li>স্ট্যাটাস পেজে এখন কোন সিরিয়াল চলছে দেখে</li>
+        <li>পিন দিয়ে পুরনো প্রেসক্রিপশন দেখে/প্রিন্ট করে</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>ডাক্তার / সহকারী</h3>
+      <ul>
+        <li>সাপ্তাহিক চেম্বার সময় নিজে বদলায়</li>
+        <li>কিউতে চেক-ইন, চেম্বার, সম্পন্ন</li>
+        <li>দেরি মিনিট দিলে সব রি-শিডিউল + SMS</li>
+        <li>ফোন দিয়ে রোগী খুঁজে প্রেসক্রিপশন লেখে প্রিন্ট</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>৩. সিরিয়াল সময় কীভাবে বসে</h2>
+  <p>ধরুন চেম্বার বিকাল ২:০০–৬:০০, স্লট ২০ মিনিট।</p>
+  <table>
+    <tr><th>সিরিয়াল</th><th>সময়</th><th>১ ঘণ্টা দেরি হলে</th></tr>
+    <tr><td>১</td><td>২:০০</td><td>৩:০০</td></tr>
+    <tr><td>২</td><td>২:২০</td><td>৩:২০</td></tr>
+    <tr><td>৩</td><td>২:৪০</td><td>৩:৪০</td></tr>
+    <tr><td>৫০</td><td>হিসাবমতো শেষের দিকে</td><td>+৬০ মিনিট</td></tr>
+  </table>
+  <p>আসল সময় আলাদা সেভ থাকে। দেরি বদলালে আবার আসল সময় + নতুন দেরি। তাই দুবার দেরি দিলে গুণে গুণে বাড়ে না, সর্বশেষ মিনিটই লাগে।</p>
+
+  <h2>৪. ওয়ার্কফ্লো</h2>
+  <div class="mermaid">
+flowchart TD
+    A["রোগী ওয়েবসাইটে নাম ও ফোন দেয়"] --> B["তারিখ ও ফাঁকা স্লট বাছে"]
+    B --> C["সিরিয়াল সেভ"]
+    C --> D["SMS: আপনার সময় ২:০০"]
+    D --> E["নির্দিষ্ট সময়ে আসে"]
+    E --> F["ডাক্তার কিউতে চেক-ইন"]
+    F --> G["প্রেসক্রিপশন লিখে প্রিন্ট"]
+    G --> H["রোগী পোর্টালে পরে দেখে"]
+  </div>
+
+  <h2>৫. দেরি রি-শিডিউল</h2>
+  <div class="mermaid">
+flowchart LR
+    A["ডাক্তার: ৬০ মিনিট দেরি"] --> B["সব booked সিরিয়ালের সময় +৬০"]
+    B --> C["প্রত্যেক রোগীকে নতুন সময় SMS"]
+    C --> D["স্ট্যাটাস পেজও নতুন সময় দেখায়"]
+  </div>
+
+  <h2>৬. মডিউল তালিকা — কী কাজ, কীভাবে</h2>
+  <table>
+    <tr><th>মডিউল</th><th>কী করে</th><th>কীভাবে ব্যবহার</th></tr>
+    <tr><td>হোম</td><td>ডাক্তার, আজকের চেম্বার, ফাঁকা সিরিয়াল</td><td>সাইটের মূল পাতা</td></tr>
+    <tr><td>সিরিয়াল নিন</td><td>স্লট বুক, পেশেন্ট তৈরি</td><td>তারিখ চিপ → স্লট → সাবমিট</td></tr>
+    <tr><td>টিকিট</td><td>সিরিয়াল, সময়, পিন</td><td>বুকিংয়ের পর অটো</td></tr>
+    <tr><td>স্ট্যাটাস</td><td>ফোন দিয়ে সিরিয়াল ও এখন চলছে</td><td>মোবাইল নম্বর</td></tr>
+    <tr><td>পোর্টাল</td><td>প্রেসক্রিপশন হিস্ট্রি</td><td>ফোন + ৪ অঙ্ক পিন</td></tr>
+    <tr><td>ডিসপ্লে</td><td>ওয়েটিং রুম TV</td><td>/display.php, ১৫ সেকেন্ড রিফ্রেশ</td></tr>
+    <tr><td>ড্যাশবোর্ড</td><td>কাউন্ট ও দেরি ফর্ম</td><td>/doctor</td></tr>
+    <tr><td>কিউ</td><td>চেক-ইন থেকে সম্পন্ন</td><td>প্রতি রোগীর বাটন</td></tr>
+    <tr><td>ওয়াক-ইন</td><td>চেম্বারে এসে সিরিয়াল</td><td>রিসেপশন</td></tr>
+    <tr><td>প্রেসক্রিপশন</td><td>ওষুধ, Dx, প্রিন্ট ℞</td><td>কিউ → প্রেসক্রিপশন</td></tr>
+    <tr><td>সময়সূচি</td><td>কোন দিন কখন বসবেন</td><td>ডাক্তার নিজে আপডেট</td></tr>
+    <tr><td>ছুটি/বিশেষ দিন</td><td>এক দিন বন্ধ বা অতিরিক্ত চেম্বার</td><td>সময়সূচি পেজ</td></tr>
+    <tr><td>রোগী ফাইল</td><td>ফোনে খুঁজে সব ভিজিট</td><td>সার্চ বক্স</td></tr>
+    <tr><td>এসএমএস</td><td>গেটওয়ে ও লগ</td><td>API কি দিলে লাইভ যাবে</td></tr>
+    <tr><td>ক্রন রিমাইন্ডার</td><td>৩০ মিনিট আগে SMS</td><td>cPanel cron</td></tr>
+  </table>
+
+  <h2>৭. আর কী যোগ করা যায় (স্মুথ করার আইডিয়া)</h2>
+  <ol>
+    <li><b>ওয়েটিং ডিসপ্লে</b> — ইতিমধ্যে আছে (<code>display.php</code>)। ট্যাবলেট/টিভিতে কিউ দেখান।</li>
+    <li><b>রিমাইন্ডার cron</b> — পালার ৩০ মিনিট আগে “এখন রওনা দিন”।</li>
+    <li><b>ওয়াক-ইন</b> — ওয়েব না ধরে যারা এসেছে তাদেরও একই স্লট ইঞ্জিন।</li>
+    <li><b>ওষুধ টেমপ্লেট</b> — বারবার লেখা কমে।</li>
+    <li><b>ফলো-আপ তারিখ</b> প্রেসক্রিপশনে — পরে রিমাইন্ডার যোগ করা যায়।</li>
+    <li><b>পেমেন্ট নোট</b> — ফি ক্যাশ/বিকাশ টিক (চাইলে পরে bKash API)।</li>
+    <li><b>সহকারী লগইন</b> — রিসেপশন কিউ ম্যানেজ, প্রেসক্রিপশন শুধু ডাক্তার।</li>
+    <li><b>মাল্টি-ডাক্তার</b> — এখন এক চেম্বার; টেবিলে doctor_id আছে, পরে ড্রপডাউন।</li>
+    <li><b>WhatsApp</b> — SMS-এর পাশাপাশি wa.me লিংক।</li>
+    <li><b>রিপোর্ট</b> — মাসিক রোগী সংখ্যা, রাজস্ব, নো-শো হার।</li>
+    <li><b>অনলাইন রিপোর্ট আপলোড</b> — রোগী CBC/USG PDF দিলে ডাক্তার দেখবেন।</li>
+    <li><b>ভাষা টগল</b> — বাংলা/ইংরেজি।</li>
+  </ol>
+
+  <h2>৮. cPanel হোস্টিং</h2>
+  <ol>
+    <li>ZIP আনজিপ করে <code>public_html</code>-এ দিন</li>
+    <li>MySQL Database তৈরি</li>
+    <li><code>data</code> ফোল্ডার writable</li>
+    <li><code>/install.php</code> খুলে MySQL তথ্য দিন</li>
+    <li>ডাক্তার ফোন/পাসওয়ার্ড সেট</li>
+    <li>Cron: প্রতি ৫ মিনিট <code>cron-remind.php</code></li>
+    <li>SMS API কি দিন — নাহলে মেসেজ শুধু লগে থাকবে</li>
+  </ol>
+
+  <h2>৯. নিরাপত্তা নোট</h2>
+  <p>পাসওয়ার্ড হ্যাশ, CSRF, prepared SQL, প্রেসক্রিপশন শুধু সংশ্লিষ্ট রোগী/ডাক্তার। <code>data/</code> ও <code>includes/</code> .htaccess দিয়ে ব্লক। ইনস্টল শেষে <code>install.php</code> সরিয়ে ফেলুন।</p>
+
+  <h2>১০. স্ক্রিনম্যাপ</h2>
+  <div class="mermaid">
+flowchart TB
+    subgraph public ["পাবলিক সাইট"]
+      I["index.php হোম"]
+      B["book.php সিরিয়াল"]
+      T["ticket.php টিকিট"]
+      S["status.php স্ট্যাটাস"]
+      P["portal.php প্রেসক্রিপশন"]
+    end
+    subgraph doc ["ডাক্তার প্যানেল"]
+      D["dashboard দেরি"]
+      Q["queue কিউ"]
+      R["prescribe ℞"]
+      SC["schedule সময়"]
+    end
+    I --> B --> T
+    T --> S
+    Q --> R
+    D --> Q
+  </div>
+
+  <script>mermaid.initialize({startOnLoad:true, theme:"neutral"});</script>
+</body>
+</html>

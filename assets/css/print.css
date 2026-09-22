@@ -1,0 +1,12 @@
+body { font-family: "Hind Siliguri", serif; margin: 0; color: #122; }
+.rx { max-width: 800px; margin: 20px auto; border: 2px solid #0b3d34; padding: 24px; }
+header, footer { display: flex; justify-content: space-between; }
+header { border-bottom: 3px double #0b3d34; padding-bottom: 10px; }
+h1 { margin: 0; color: #0b3d34; }
+.patient { display: flex; gap: 18px; flex-wrap: wrap; padding: 10px 0; border-bottom: 1px solid #ccc; }
+.rx-body { display: grid; grid-template-columns: 240px 1fr; min-height: 420px; }
+.left-col { border-right: 1px solid #ccc; padding-right: 12px; }
+.rx-symbol { font-size: 42px; color: #0b3d34; }
+table { width: 100%; }
+.sign { text-align: right; }
+@media print { .no-print { display: none; } .rx { border-width: 0; } }
